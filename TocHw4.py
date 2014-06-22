@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+####學號:F74002052, 姓名:趙珮雯
+####將最多筆成交量的路段印出來，印出最大成交價和最小成交價
+####(若成交時間同年同月算一筆)
+####給一個參數 : 網址
+
 import urllib
 import json
 import sys      #for argc, argv
@@ -20,6 +25,7 @@ min_money = dict()
 
 for item in data :
 	old_road = item[u'土地區段位置或建物區門牌']
+	#若符合 '路' or '街' or '巷' or '大道' 就是要處理的資料
 	if re.search(ur"路", old_road) or re.search(ur"街", old_road) or re.search(ur"巷", old_road) or re.search(ur"大道", old_road):
 		if re.search(ur"路", old_road):
 			road = old_road.split(u'路')[0]
@@ -40,9 +46,9 @@ for item in data :
 			list[road].append(item[u'交易年月'])
 		
 		money = item[u'總價元']
-		if max_money.has_key(road) == False:
+		if max_money.has_key(road) == False: #if dict 裡沒有這個key
 			max_money[road] = money
-		if min_money.has_key(road) == False:
+		if min_money.has_key(road) == False: #if dict 裡沒有這個key
 			min_money[road] = money
 		#更新max_money and min_money
 		if max_money[road] < money:
